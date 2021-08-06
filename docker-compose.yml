@@ -1,0 +1,21 @@
+version: '3.7'
+
+services:
+  mongo:
+    image: mongo:4.4.0
+    ports:
+      - 27017:27017
+    volumes:
+      - ./volumes/mongo/db:/data/db
+      - ./volumes/mongo/configdb:/data/configdb
+
+  mongo-express:
+    image: mongo-express:0.54.0
+    environment:
+      ME_CONFIG_MONGODB_SERVER: mongo
+      ME_CONFIG_MONGODB_PORT: 27017
+      ME_CONFIG_MONGODB_ENABLE_ADMIN: 'true'
+      ME_CONFIG_MONGODB_ADMINUSERNAME: ''
+      ME_CONFIG_MONGODB_ADMINPASSWORD: ''
+    ports:
+      - 8081:8081
