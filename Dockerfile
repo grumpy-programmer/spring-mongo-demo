@@ -1,3 +1,5 @@
+# This image contains builder - step to build java application from sources using maven, and runtime to launch the application
+
 # this image will be used in application build process, we need jdk to build java application
 FROM openjdk:11-jdk as builder
 
