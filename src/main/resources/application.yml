@@ -6,3 +6,9 @@ spring:
       host: localhost
       port: 27017
       database: spring-mongo-demo
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info, prometheus
