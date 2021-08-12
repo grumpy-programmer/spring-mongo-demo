@@ -34,12 +34,12 @@ docker-compose rm
 rm -rf volumes
 ```
 
-## 3. Building maven project
+## 3. Building gradle project
 
-Use maven wrapper`./mvn` script to build the application 
+Use gradle wrapper`./gradlew` script to build the application
 
 ```shell
-./mvn package
+./gradlew build
 ```
 
 ## 4 Building docker image
@@ -58,7 +58,8 @@ For building production docker image
 docker build -t ghcr.io/grumpy-programmer/spring-mongo-demo .
 ```
 
-This application is using github registry to store images, [see more](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry)
+This application is using github registry to store
+images, [see more](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry)
 
 Login to github registry
 
@@ -72,10 +73,13 @@ docker login --username USERNAME --password GITHUB_TOKEN ghcr.io
 
 ## 5. Github actions
 
-The build pipeline [.github/workflows/build.yml](.github/workflows/build.yml) builds maven application, create docker image and push the image to github registry.
+The build pipeline [.github/workflows/build.yml](.github/workflows/build.yml) builds gradle application, create docker
+image and push the image to github registry.
 
-Images will have shared tag latest and unique one as `github.run_id` [see more](https://docs.github.com/en/actions/reference/context-and-expression-syntax-for-github-actions#github-context).
+Images will have shared tag latest and unique one
+as `github.run_id` [see more](https://docs.github.com/en/actions/reference/context-and-expression-syntax-for-github-actions#github-context)
+.
 
 Pipeline will be triggered each time new commit will be pushed/merged to `main` branch.
 
-For time optimization [github action cache](https://github.com/actions/cache) is added to pipeline.  
+For time optimization [github action cache](https://github.com/actions/cache) is added to pipeline.

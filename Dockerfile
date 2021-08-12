@@ -7,7 +7,7 @@ FROM openjdk:11-jre
 WORKDIR /opt/spring
 
 # copy only jar from local target directory
-COPY target/spring-mongo-demo-*.jar spring-mongo-demo.jar
+COPY build/libs/spring-mongo-demo-*.jar spring-mongo-demo.jar
 
 # expose port (for spring default is 8080, if changed in config then should be changed in expose)
 EXPOSE 8080
