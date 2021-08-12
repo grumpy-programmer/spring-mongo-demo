@@ -1,12 +1,11 @@
 plugins {
     id 'org.springframework.boot' version "${springBootVersion}"
     id 'io.spring.dependency-management' version "${springDependencyManagement}"
-    id 'com.palantir.git-version' version "${gitPluginVersion}"
     id 'java'
 }
 
 group = 'io.grumpyprogrammer'
-version = gitVersion()
+version = System.getenv('VERSION') ?: 'dirty'
 sourceCompatibility = JavaVersion.VERSION_11
 
 configurations {

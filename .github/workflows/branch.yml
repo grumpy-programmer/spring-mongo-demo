@@ -1,7 +1,7 @@
-name: build
+name: branch
 on:
   push:
-    branches:
+    branches-ignore:
       - main
 
 jobs:
@@ -35,11 +35,3 @@ jobs:
 
       - name: docker build
         run: docker build -f Dockerfile -t ghcr.io/grumpy-programmer/spring-mongo-demo:${{ github.run_id }} .
-
-      - name: docker tag
-        run: docker tag ghcr.io/grumpy-programmer/spring-mongo-demo:${{ github.run_id }} ghcr.io/grumpy-programmer/spring-mongo-demo
-
-      - name: docker push
-        run: |
-          docker push ghcr.io/grumpy-programmer/spring-mongo-demo:${{ github.run_id }}
-          docker push ghcr.io/grumpy-programmer/spring-mongo-demo

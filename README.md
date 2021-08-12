@@ -1,12 +1,12 @@
 # spring-mongo-demo
 
-## 1. Pre requirements
+## Pre requirements
 
 * java 11
 * docker
 * docker compose
 
-## 2. Local development
+## Local development
 
 Docker compose contains following services:
 
@@ -34,7 +34,7 @@ docker-compose rm
 rm -rf volumes
 ```
 
-## 3. Building gradle project
+## Building gradle project
 
 Use gradle wrapper`./gradlew` script to build the application
 
@@ -42,7 +42,7 @@ Use gradle wrapper`./gradlew` script to build the application
 ./gradlew build
 ```
 
-## 4 Building docker image
+## Building docker image
 
 The [Dockerfile](Dockerfile) to build docker image of the application.
 
@@ -71,15 +71,14 @@ docker login ghcr.io -u USERNAME --password-stdin
 docker login --username USERNAME --password GITHUB_TOKEN ghcr.io
 ```
 
-## 5. Github actions
+## Github actions
 
-The build pipeline [.github/workflows/build.yml](.github/workflows/build.yml) builds gradle application, create docker
+The build pipeline [.github/workflows/build.yml](.github/workflows/main.yml) builds gradle application, create docker
 image and push the image to github registry.
 
-Images will have shared tag latest and unique one
-as `github.run_id` [see more](https://docs.github.com/en/actions/reference/context-and-expression-syntax-for-github-actions#github-context)
-.
+Images will have shared tag latest and unique with current version.
 
-Pipeline will be triggered each time new commit will be pushed/merged to `main` branch.
+Pipeline will for each branch (except main) to build gradle application and docker image. For `main` branch additionally
+docker image will be pushed to github registry.
 
 For time optimization [github action cache](https://github.com/actions/cache) is added to pipeline.
