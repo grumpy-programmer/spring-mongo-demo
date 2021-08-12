@@ -34,35 +34,48 @@ docker-compose rm
 rm -rf volumes
 ```
 
-## 3. Building docker image
+## 3. Building maven project
 
-The application can be build in two different way.
-
-First (3.1) is building application inside docker and then creating runtime image. This is useful for docker hub image
-build.
-
-Second way is to build application by maven (3.2) and then create docker image for runtime (3.3).
-
-### 3.1 Building application inside docker image
-
-The application will be fully build inside docker image and then runtime image with jar will be created
-
-```shell
-docker build -t spring-mongo-demo .
-```
-
-### 3.2 Building application locally by maven
-
-Building application using maven wrapper
+Use maven wrapper`./mvn` script to build the application 
 
 ```shell
 ./mvn package
 ```
 
-### 3.3 Building runtime only docker image
+## 4 Building docker image
 
-Creating docker image with jar build locally
+The [Dockerfile](Dockerfile) to build docker image of the application.
+
+For local development and testing
 
 ```shell
-docker build -f runtime-only.Dockerfile -t spring-mongo-demo .
+docker build -t spring-mongo-demo .
 ```
+
+For building production docker image
+
+```shell
+docker build -t ghcr.io/grumpy-programmer/spring-mongo-demo .
+```
+
+This application is using github registry to store images, [see more](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry)
+
+Login to github registry
+
+```shell
+# using std input to provide password (GITHUB_TOKEN)
+docker login ghcr.io -u USERNAME --password-stdin
+
+# setting password in command line
+docker login --username USERNAME --password GITHUB_TOKEN ghcr.io
+```
+
+## 5. Github actions
+
+The build pipeline [.github/workflows/build.yml](.github/workflows/build.yml) builds maven application, create docker image and push the image to github registry.
+
+Images will have shared tag latest and unique one as `github.run_id` [see more](https://docs.github.com/en/actions/reference/context-and-expression-syntax-for-github-actions#github-context).
+
+Pipeline will be triggered each time new commit will be pushed/merged to `main` branch.
+
+For time optimization [github action cache](https://github.com/actions/cache) is added to pipeline.  

@@ -1,16 +1,4 @@
-# This image contains builder - step to build java application from sources using maven, and runtime to launch the application
-
-# this image will be used in application build process, we need jdk to build java application
-FROM openjdk:11-jdk as builder
-
-# change work dir (current dir)
-WORKDIR /tmp/spring
-
-# copy all project to docker
-COPY . .
-
-# build an test project
-RUN ./mvnw package
+# This image contains only runtime for application, application should be build before building image
 
 # this is runtime image, we need jre for running java application
 FROM openjdk:11-jre
@@ -18,8 +6,8 @@ FROM openjdk:11-jre
 # create working dir
 WORKDIR /opt/spring
 
-# copy only jar from previous image
-COPY --from=builder /tmp/spring/target/spring-mongo-demo-0.0.1-SNAPSHOT.jar spring-mongo-demo.jar
+# copy only jar from local target directory
+COPY target/spring-mongo-demo-*.jar spring-mongo-demo.jar
 
 # expose port (for spring default is 8080, if changed in config then should be changed in expose)
 EXPOSE 8080

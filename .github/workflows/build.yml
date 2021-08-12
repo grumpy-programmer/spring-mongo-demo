@@ -32,7 +32,7 @@ jobs:
         run: docker login --username ${{ github.actor }} --password ${{ secrets.GITHUB_TOKEN }} ghcr.io
 
       - name: docker build
-        run: docker build -f runtime-only.Dockerfile -t ghcr.io/grumpy-programmer/spring-mongo-demo:${{ github.run_id }} .
+        run: docker build -f Dockerfile -t ghcr.io/grumpy-programmer/spring-mongo-demo:${{ github.run_id }} .
 
       - name: docker tag
         run: docker tag ghcr.io/grumpy-programmer/spring-mongo-demo:${{ github.run_id }} ghcr.io/grumpy-programmer/spring-mongo-demo
